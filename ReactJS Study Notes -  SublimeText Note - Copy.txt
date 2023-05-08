@@ -1,0 +1,219 @@
+
+React is a Javascript library for building user interfaces
+
+Complex UI structures can be broken down into a component tree
+
+Each component has its own styling and functionality that it controls and can talk to the server independently 
+
+re-renders components by doing a dif with the old version and updates changes to only the newly changed components - provides for great performance.
+
+Basic setup of index.html
+
+    <body>
+        <div id="root"></div>
+        <script src="../src/index.js" type="text/JSX"></script>
+        </body>
+    </html>
+
+
+All code is written in index.js
+
+Dependencies are required inside the files that use them.
+
+    var React = require("react");
+    var ReactDom = require("react-dom");
+
+    ReactDom.render(What to show, Where to Show);
+
+    ReactDom.render(<h1>Hello Buddy!</h1>, document.getElementById("root"));
+
+By using JSX you can insert HTML into Javascript.
+
+React compiles the HTML rather than having to write it out in the HTML file
+ 
+!!! ATTENTION
+    Babel is a Javascript compiler -  It can take nehttps://proforums.harman.com/soundcraft/discussion/137176/how-to-connect-external-effect-to-soundcraft-signature-12xt generation Javascript and compile it down to a version that every brower can use
+
+So we can use latest JS to import dependencies rather than using require and a variable
+
+    import React from "react";
+    import ReactDom from "react-dom";
+
+ReactDom.render will only render a single HTML element so it needs to be wrapped in a DIV 
+
+    ReactDom.render(
+      <div>
+        <h1>Hello Buddy!</h1>
+        <p> How the heck is it going?</p>
+      </div>,
+      document.getElementById("root"));
+
+use {} to insert javascript inside an HTML element using ReactDOM.render
+
+	const fName = "Chadwick";
+	const lName = "Tymko";
+	const num = 18;
+
+	ReactDOM.render(
+	  <div>
+	    <h1>Hello {fName + " " + lName}!</h1>
+	    <p>Your lucky number is {num}</p>
+	  </div>,
+	  document.getElementById("root")
+	);
+
+Template Literals - ES6 - Code above is probably easier to read and cleaner though
+    {`${fName} ${lName}`}
+    
+    
+Use className instead of class for styling in JSX files
+
+Use Javascript style camel casing for HTML attributes
+
+Can you type on multiple lines in VScode?
+
+A closing / is required for HTML elements like img in JSX
+`<img alt="random" src={img + "?grayscale"} />`
+
+Inline style element needs to reference a javascript object. Sometimes useful when wanting to update styles on the fly.
+
+CSS properties need to be camel case rather than kebab case for use in the Javascript customStyle object in JSX.
+
+    const customStyle = {
+      color: "red",
+      fontSize: "20px",
+      border: "1px solid black"
+    };
+
+    customStyle.color = "blue";
+
+    ReactDOM.render(
+      <h1 style={customStyle}>Hello World!</h1>,
+      document.getElementById("root")
+    );
+
+
+
+
+
+Components allow you to split up a complex web structure into smaller components which are reusable
+
+Component names are in pascal case -  Capital letter first
+
+https://github.com/airbnb/javascript/tree/master/react
+
+Create seperate file for a component and then import it into index.js for example
+
+Components are saved as a .jsx file usually in a components folder as best practice.
+
+Index.js should reference a component named App.jsx rather than containing any HTML elements or custom code.
+
+
+Index.js
+
+    import React from "react";
+    import ReactDOM from "react-dom";
+    import App from "./components/App";
+
+    ReactDOM.render(<App />, document.getElementById("root"));
+
+
+components/Heading.jsx
+
+    import React from "react";
+
+    function Heading() {
+      return <h1>My Favourite Foods</h1>;
+    }
+
+    export default Heading;
+
+
+components/App.jsx
+
+    import React from "react";
+    import Heading from "./Heading";
+
+    function App() {
+      return (
+        <div>
+          <Heading />
+        </div>
+      );
+    }
+
+    export default App;
+
+
+
+Import, Export and Modules:
+
+You can export a default item from a module as well as additional items
+
+The default export can have any name when importing. Additional exports need to be imported using their specific names
+
+You can import mutliples items from a module
+
+* can be used with import rather then declaring each exported item but is discourged you should rather import just what you are using.
+
+
+math.js:
+
+    const pi = 3.1415962;
+
+    function doublePi() {
+      return pi * 2;
+    }
+
+    function triplePi() {
+      return pi * 3;
+    }
+
+    export default pi;
+    export { doublePi, triplePi };
+
+
+index.js
+
+    import React from "react";
+    import ReactDOM from "react-dom";
+    import pi, { doublePi, triplePi } from "./math.js";
+
+    ReactDOM.render(
+      <ul>
+        <li>{pi}</li>
+        <li>{doublePi()}</li>
+        <li>{triplePi()}</li>
+      </ul>,
+      document.getElementById("root")
+    );
+
+
+
+
+
+
+____
+
+Windows setup and installation
+
+----
+
+node --version
+
+go to node website and download the latest version
+
+npx create-react-app my-app
+cd my-app
+npm start
+
+npm install --run in folder of existing code to init
+
+https://reactjs.org/docs/create-a-new-react-app.html#create-react-app
+
+
+
+ 
+
+
+
