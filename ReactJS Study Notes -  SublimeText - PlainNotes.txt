@@ -188,8 +188,426 @@ index.js
       document.getElementById("root")
     );
 
+Props
+
+Props are arguments passed into React components.
+
+Props are passed to components via HTML attributes.
 
 
+Add a "brand" attribute to the Car element:
+
+    const myElement = <Car brand="Ford" />;
+
+Use the brand attribute in the component:
+
+    function Car(props) {
+        return <h2>I am a { props.brand }!</h2>;
+    }
+
+Props Examples:
+
+App.jsx:
+
+    import React from "react";
+    import Card from "./Card";
+    import contacts from "../contacts";
+
+    function App() {
+      return (
+        <div>
+          <h1 className="heading">My Contacts</h1>
+          <Card
+            name={contacts[0].name}
+            img={contacts[0].imgURL}
+            tel={contacts[0].phone}
+            email={contacts[0].email}
+          />
+          <Card
+            name={contacts[1].name}
+            img={contacts[1].imgURL}
+            tel={contacts[1].phone}
+            email={contacts[1].email}
+          />
+          <Card
+            name={contacts[2].name}
+            img={contacts[2].imgURL}
+            tel={contacts[2].phone}
+            email={contacts[2].email}
+          />
+        </div>
+      );
+    }
+
+    export default App;
+
+Card.jsx
+
+    import React from "react";
+
+    function Card(props) {
+      return (
+        <div className="card">
+          <div className="top">
+            <h2 className="name">{props.name}</h2>
+            <img className="circle-img" src={props.img} alt="avatar_img" />
+          </div>
+          <div className="bottom">
+            <p className="info">{props.tel}</p>
+            <p className="info">{props.email}</p>
+          </div>
+        </div>
+      );
+    }
+
+    export default Card;
+
+Contacts.js
+
+    const contacts = [
+      {
+        name: "Bob Barker",
+        imgURL:
+          "https://files.files.wordpress.com/2010/02/picture-device-independent-bitmap-119.jpg",
+        phone: "+123 456 789",
+        email: "b@barker.com"
+      },
+      {
+        name: "Al Chappers",
+        imgURL:
+          "https://pbs.twimg.com/profile_images/625247595825246208/X3XLea04_400x400.jpg",
+        phone: "+987 654 321",
+        email: "al@cte.com"
+      },
+      {
+        name: "Chuck Norris",
+        imgURL:
+          "https://i.pinimg.com/originals/e3/94/47/e39447de921955826b1e498ccf9a39af.png",
+        phone: "+918 372 574",
+        email: "gmail@chucknorris.com"
+      }
+    ];
+
+    export default contacts;
+
+Mapping Components:
+
+App.jsx
+
+    import React from "react";
+    import Card from "./Card";
+    import contacts from "../contacts";
+
+    function createCard(contact) {
+      return (
+        <Card
+          key={contact.id}
+          name={contact.name}
+          img={contact.imgURL}
+          tel={contact.phone}
+          email={contact.email}
+        />
+      );
+    }
+
+    function App() {
+      return (
+        <div>
+          <h1 className="heading">My Contacts</h1>
+          {contacts.map(createCard)}
+      );
+    }
+
+    export default App;
+
+
+Map / Filter/ Reduce:
+
+
+Map -Create a new array by doing something with each item in an array.
+
+    var numbers = [3, 56, 2, 48, 5];
+
+    function double(x) {
+      return x * 2;
+    }
+    const newNumbers = numbers.map(double);
+
+    var newNumbers = [];
+    numbers.forEach(function (x) {
+      newNumbers.push(x * 2);
+    });
+
+    const newNumbers = numbers.map(function (x) {
+      return x * 2;
+    });
+
+    console.log(newNumbers);
+
+Filter - Create a new array by keeping the items that return true.
+
+    var numbers = [3, 56, 2, 48, 5];
+
+    const newNumbers = numbers.filter(function(num) {
+      return num < 10;
+    });
+
+    var newNumbers = [];
+    numbers.forEach(function(num) {
+      if (num < 10) {
+        newNumbers.push(num);
+      }
+    })
+
+Reduce - Accumulate a value by doing something to each item in an array.
+
+    var numbers = [3, 56, 2, 48, 5];
+
+    var newNumber = numbers.reduce(function (accumulator, currentNumber) {
+      console.log("accumulator = " + accumulator);
+      console.log("currentNumber = " + currentNumber);
+        return accumulator + currentNumber;
+    })
+
+    var newNumber = 0;
+    numbers.forEach(function (currentNumber) {
+      newNumber += currentNumber
+    })
+
+Find - find the first item that matches from an array.
+
+    var numbers = [3, 56, 2, 48, 5];
+
+    const newNumber = numbers.find(function (num) {
+      return num > 10;
+    })
+
+    console.log(newNumber);
+
+FindIndex - find the index of the first item that matches.
+
+    var numbers = [3, 56, 2, 48, 5];
+
+    const newNumber = numbers.findIndex(function (num) {
+      return num > 10;
+    })
+
+    console.log(newNumber);
+
+
+Arrow Functions:
+
+Map -Create a new array by doing something with each item in an array.
+
+    var numbers = [3, 56, 2, 48, 5];
+
+    const newNumbers = numbers.map( x => x * 2);
+
+Filter - Create a new array by keeping the items that return true.
+
+    var numbers = [3, 56, 2, 48, 5];
+
+    const newNumbers = numbers.filter(num => num < 10);
+
+Reduce - Accumulate a value by doing something to each item in an array.
+
+    var numbers = [3, 56, 2, 48, 5];
+
+    const newNumber = numbers.reduce((accumulator, currentNumber) => accumulator + currentNumber);
+
+Find - find the first item that matches from an array.
+
+    var numbers = [3, 56, 2, 48, 5];
+
+    const newNumber = numbers.find(num => num > 10);
+
+FindIndex - find the index of the first item that matches.
+
+    var numbers = [3, 56, 2, 48, 5];
+
+    const newNumber = numbers.findIndex(num => num > 10);
+
+Arrow Function when calling Component with props (App.jsx):
+
+    import React from "react";
+    import Entry from "./Entry";
+    import emojipedia from "../emojipedia";
+
+    function App() {
+      return (
+        <div>
+          <h1>
+            <span>emojipedia</span>
+          </h1>
+          <dl className="dictionary">
+            {emojipedia.map(emojiTerm => (
+              <Entry
+                key={emojiTerm.id}
+                emoji={emojiTerm.emoji}
+                name={emojiTerm.name}
+                description={emojiTerm.meaning}
+              />
+            ))}
+          </dl>
+        </div>
+      );
+    }
+
+    export default App;    
+
+
+Conditional Rendering with the Ternary Operator & AND Operator:
+
+App.jsx
+
+    import React from "react";
+    import Login from "./Login";
+
+    var isLoggedIn = false;
+
+    const currentTime = new Date(2019, 11, 1, 9).getHours();
+    console.log(currentTime);
+
+    function App() {
+      return (
+        <div className="container">
+          {/*Ternary Operator*/}
+          {isLoggedIn ? <h1>Hello</h1> : <Login />}
+          {/*AND Operator*/}
+          {currentTime > 12 && <h1>Why are you still working?</h1>}
+        </div>
+      );
+    }
+
+    export default App;
+
+Input.jsx
+
+    import React from "react";
+
+    function Input(props) {
+      return <input type={props.type} placeholder={props.placeholder} />;
+    }
+
+    export default Input;
+
+Login.jsx
+
+    import React from "react";
+    import Input from "./Input";
+
+    function Login() {
+      return (
+        <form className="form">
+          <Input type="text" placeholder="Username" />
+          <Input type="password" placeholder="Password" />
+          <button type="submit">Login</button>
+        </form>
+      );
+    }
+
+    export default Login;
+
+State in React - Declarative vs. Imperative Programming:
+
+Imperative Programming as the name suggests is a type of programming paradigm that describes how the program executes. Developers are more concerned with how to get an answer step by step. It comprises the sequence of command imperatives. In this, the order of execution is very important and uses both mutable and immutable data. Fortran, Java, C, C++ programming languages are examples of imperative programming. 
+
+Declarative Programming as the name suggests is a type of programming paradigm that describes what programs to be executed. Developers are more concerned with the answer that is received. It declares what kind of results we want and leave programming language aside focusing on simply figuring out how to produce them. In simple words, it mainly focuses on end result. It expresses the logic of computation. Miranda, Erlang, 
+Haskell, Prolog are a few popular examples of declarative programming.
+
+
+React Hooks - useState
+
+https://legacy.reactjs.org/docs/hooks-state.html
+
+Hooks must be used inside a functional component.
+
+
+    import React, { useState } from "react";
+
+    function App() {
+      const [count, setCount] = useState(0);
+
+      function increase() {
+        setCount(count + 1);
+      }
+
+      function decrease() {
+        setCount(count - 1);
+      }
+
+      return (
+        <div className="container">
+          <h1>{count}</h1>
+          <button onClick={decrease}>-</button>
+          <button onClick={increase}>+</button>
+        </div>
+      );
+    }
+
+    export default App;
+
+
+Javascript ES6 Object & Array Destructuring
+
+
+Practice.js
+
+    const cars = [
+      {
+        model: "Honda Civic",
+        coloursByPopularity: ["black", "silver"],
+        speedStats: {
+          topSpeed: 140,
+          zeroToSixty: 8.5
+        }
+      },
+      {
+        model: "Tesla Model 3",
+        coloursByPopularity: ["red", "white"],
+        speedStats: {
+          topSpeed: 150,
+          zeroToSixty: 3.2
+        }
+      }
+    ];
+
+    export default cars;
+
+Index.js
+
+    import React from "react";
+    import ReactDOM from "react-dom";
+    import cars from "./practice";
+
+    const [honda, tesla] = cars;
+
+    const { speedStats: { topSpeed: hondaTopSpeed } } = honda;
+    const { speedStats: { topSpeed: teslaTopSpeed } } = tesla;
+
+    const {coloursByPopularity: [hondaTopColour]} = honda;
+    const {coloursByPopularity: [teslaTopColour]} = tesla;
+
+    ReactDOM.render(
+      <table>
+        <tr>
+          <th>Brand</th>
+          <th>Top Speed</th>
+          <th>Top Colour</th>
+        </tr>
+        <tr>
+          <td>{tesla.model}</td>
+          <td>{teslaTopSpeed}</td>
+          <td>{teslaTopColour}</td>
+        </tr>
+        <tr>
+          <td>{honda.model}</td>
+          <td>{hondaTopSpeed}</td>
+          <td>{hondaTopColour}</td>
+        </tr>
+      </table>,
+      document.getElementById("root")
+    );
 
 
 
@@ -213,7 +631,9 @@ https://reactjs.org/docs/create-a-new-react-app.html#create-react-app
 
 
 
- 
+Do the keeper App challenges for best practice 
 
 
 
+
+Pine, Fir, Spruce
