@@ -694,6 +694,75 @@ App.jsx
     export default App;
 
 
+Class Components vs. Functional Components:
+
+Hooks are a new addition in React 16.8. They let you use state and other React features without writing a class.
+
+The function useState is the first “Hook” we learned about
+
+Classes are generally not suggested to use anymore since the release of hooks.Except for some rare edge cases.
+
+
+
+Changing Complex State:
+
+You can pass an object into UseState() as seen with the fullName constant.
+
+You cannot refer to the event.target inside a function like setFullName inside your event handler due to the synthetic event.
+
+Synthetic Events: Your event handlers will be passed instances of SyntheticEvent, a cross-browser wrapper around the browser’s native event. It has the same interface as the browser’s native event,
+
+    import React, { useState } from "react";
+
+    function App() {
+      const [fullName, setFullName] = useState({
+        fName: "",
+        lName: ""
+      });
+
+    function handleChange(event) {
+      const { value, name } = event.target;
+
+    setFullName(prevValue => {
+      if (name === "fName") {
+        return {
+          fName: value,
+          lName: prevValue.lName
+        };
+      } else if (name === "lName") {
+        return {
+          fName: prevValue.fName,
+          lname: value
+        };
+      }
+    });
+    }
+
+    return (
+      <div className="container">
+        <h1>
+          Hello {fullName.fName} {fullName.lName}
+        </h1>
+        <form>
+          <input
+            name="fName"
+            onChange={handleChange}
+            placeholder="First Name"
+            value={fullName.fName}
+          />
+          <input
+            name="lName"
+            onChange={handleChange}
+            placeholder="Last Name"
+            value={fullName.lName}
+          />
+          <button>Submit</button>
+        </form>
+      </div>
+    );
+    }
+
+    export default App;
 
 
 
