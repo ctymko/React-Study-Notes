@@ -32,7 +32,7 @@ By using JSX you can insert HTML into Javascript.
 React compiles the HTML rather than having to write it out in the HTML file
  
 !!! ATTENTION
-    Babel is a Javascript compiler -  It can take nehttps://proforums.harman.com/soundcraft/discussion/137176/how-to-connect-external-effect-to-soundcraft-signature-12xt generation Javascript and compile it down to a version that every brower can use
+    Babel is a Javascript compiler -  It can take next generation Javascript and compile it down to a version that every browser can use
 
 So we can use latest JS to import dependencies rather than using require and a variable
 
@@ -396,6 +396,21 @@ FindIndex - find the index of the first item that matches.
 
 
 Arrow Functions:
+
+Arrow functions allow us to write shorter function syntax:
+
+    hello = function() {
+      return "Hello World!";
+    }
+
+    hello = () => {
+      return "Hello World!";
+    }
+
+Arrow Function With Parameters:
+
+    hello = (val) => "Hello " + val;
+
 
 Map -Create a new array by doing something with each item in an array.
 
@@ -765,6 +780,153 @@ Synthetic Events: Your event handlers will be passed instances of SyntheticEvent
     export default App;
 
 
+Javascript ES6 Spread Operator:
+
+Allows you to concat the values of objects/arrays into other objects/arrays.  
+
+Javascript ES6 Spread Operator Practice is a good todo list example
+
+    import React, { useState } from "react";
+
+    function App() {
+      const [inputText, setInputText] = useState("");
+      const [items, setItems] = useState([]);
+
+      function handleChange(event) {
+        const newValue = event.target.value;
+        setInputText(newValue);
+      }
+
+      function addItem() {
+        setItems(prevItems => {
+          return [...prevItems, inputText];
+        });
+        setInputText("");
+      }
+
+      return (
+        <div className="container">
+          <div className="heading">
+            <h1>To-Do List</h1>
+          </div>
+          <div className="form">
+            <input onChange={handleChange} type="text" value={inputText} />
+            <button onClick={addItem}>
+              <span>Add</span>
+            </button>
+          </div>
+          <div>
+            <ul>
+              {items.map(todoItem => (
+                <li>{todoItem}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      );
+    }
+
+  export default App;
+  
+Managing a Component Tree:
+
+Using state between components - Todo List
+
+App.jsx
+
+    import React, { useState } from "react";
+    import ToDoItem from "./ToDoItem";
+    import InputArea from "./InputArea";
+
+    function App() {
+      const [items, setItems] = useState([]);
+
+      function addItem(inputText) {
+        setItems(prevItems => {
+          return [...prevItems, inputText];
+        });
+      }
+
+      function deleteItem(id) {
+        setItems(prevItems => {
+          return prevItems.filter((item, index) => {
+            return index !== id;
+          });
+        });
+      }
+
+      return (
+        <div className="container">
+          <div className="heading">
+            <h1>To-Do List</h1>
+          </div>
+          <InputArea onAdd={addItem} />
+          <div>
+            <ul>
+              {items.map((todoItem, index) => (
+                <ToDoItem
+                  key={index}
+                  id={index}
+                  text={todoItem}
+                  onChecked={deleteItem}
+                />
+              ))}
+            </ul>
+          </div>
+        </div>
+      );
+    }
+
+    export default App;
+
+
+InputArea.jsx
+
+    import React, { useState } from "react";
+
+    function InputArea(props) {
+      const [inputText, setInputText] = useState("");
+
+      function handleChange(event) {
+        const newValue = event.target.value;
+        setInputText(newValue);
+      }
+
+      return (
+        <div className="form">
+          <input onChange={handleChange} type="text" value={inputText} />
+          <button
+            onClick={() => {
+              props.onAdd(inputText);
+              setInputText("");
+            }}
+          >
+            <span>Add</span>
+          </button>
+        </div>
+      );
+    }
+
+    export default InputArea;
+  
+  
+ToDoItem.jsx
+
+    import React from "react";
+
+    function ToDoItem(props) {
+      return (
+        <div
+          onClick={() => {
+            props.onChecked(props.id);
+          }}
+        >
+          <li>{props.text}</li>
+        </div>
+      );
+    }
+
+    export default ToDoItem;
 
 
 ____
@@ -789,7 +951,36 @@ https://reactjs.org/docs/create-a-new-react-app.html#create-react-app
 
 Do the keeper App challenges for best practice 
 
+https://www.w3schools.com/react/default.asp
+w3 challenges and exercises are decent
 
 
 
-Pine, Fir, Spruce
+Things to know:
+
+1. JSX
+2. Keys
+3. Virtual DOM Vs. Real DOM
+4. Features of React
+5. Functional Vs. Class Components
+6. Components
+7. State
+8. Props
+9. Prop drilling
+10. Lifecycle Methods
+11. React Router
+12. Higher Order Components
+13. React Hooks (useState, useEffect, useContext, useReducer, useMemo, useRef, useCallback, custom hooks)
+14. How to prevent re-renders?
+15. Different ways to style a React component?
+16. Techniques to optimize React app performance?
+16. How to pass data between React components?
+17. Conditional rendering
+18. Redux
+19. Controlled Vs. Uncontrolled components
+20. Pure Components
+21. Fragments
+22. Event in React
+23. Strict Mode
+24. Forms
+25. Synthetic event
