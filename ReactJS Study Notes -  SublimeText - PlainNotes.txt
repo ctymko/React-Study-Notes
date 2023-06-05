@@ -984,3 +984,6 @@ Things to know:
 23. Strict Mode
 24. Forms
 25. Synthetic event
+
+
+Latency Monitor
